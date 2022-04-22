@@ -114,6 +114,19 @@ export default class Project {
   public watch(options?: Options): Watch {
     return new Watch(this.check({ ...options, flags: ['--watch'], reject: false }));
   }
+
+  public build(options: Options & { flags?: string[] } = {}): ExecaChildProcess {
+    let build = ['--build'];
+    let flags = options.flags ? build.concat(options.flags) : build;
+    return execa.node(`${__dirname}/../../bin/glint`, flags, {
+      cwd: this.rootDir,
+      ...options,
+    });
+  }
+
+  public buildWatch(options: Options): Watch {
+    return new Watch(this.build({ ...options, flags: ['--watch'], reject: false }));
+  }
 }
 
 class Watch {
