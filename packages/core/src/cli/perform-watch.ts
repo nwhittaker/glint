@@ -2,6 +2,7 @@ import TransformManager from '../common/transform-manager';
 import { GlintConfig } from '@glint/config';
 import { buildDiagnosticFormatter } from './diagnostics';
 import type ts from 'typescript';
+import { sysForWatchCompilerHost } from './utils/sys-for-watch';
 
 export type TypeScript = typeof ts;
 
@@ -24,20 +25,6 @@ export function performWatch(
   patchWatchCompilerHost(host, transformManager);
 
   ts.createWatchProgram(host);
-}
-
-function sysForWatchCompilerHost(
-  ts: typeof import('typescript'),
-  transformManager: TransformManager
-): typeof ts.sys {
-  return {
-    ...ts.sys,
-    readDirectory: transformManager.readDirectory,
-    watchDirectory: transformManager.watchDirectory,
-    fileExists: transformManager.fileExists,
-    watchFile: transformManager.watchTransformedFile,
-    readFile: transformManager.readTransformedFile,
-  };
 }
 
 type Program = ts.SemanticDiagnosticsBuilderProgram;
