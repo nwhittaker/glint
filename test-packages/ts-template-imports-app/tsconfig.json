@@ -2,6 +2,9 @@
   "extends": "../../tsconfig.compileroptions.json",
   "include": ["src"],
   "glint": {
-    "environment": ["ember-loose", "ember-template-imports"]
+    "environment": {
+      "ember-loose": {},
+      "ember-template-imports": {}
+    }
   }
 }

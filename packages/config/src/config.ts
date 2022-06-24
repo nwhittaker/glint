@@ -3,7 +3,7 @@ import { Minimatch, IMinimatch } from 'minimatch';
 import { GlintEnvironment } from './environment';
 
 export type GlintConfigInput = {
-  environment: string | Array<string> | Record<string, unknown>;
+  environment: string | Record<string, unknown>;
   checkStandaloneTemplates?: boolean;
   transform?: {
     include?: string | Array<string>;

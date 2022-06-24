@@ -447,8 +447,12 @@ describe('rewriteModule', () => {
   });
 
   describe('ember-template-imports', () => {
+    let templateImportsEnv = GlintEnvironment.load({
+      'ember-loose': {},
+      'ember-template-imports': {},
+    });
+
     test('embedded gts templates', () => {
-      let customEnv = GlintEnvironment.load(['ember-loose', 'ember-template-imports']);
       let script = {
         filename: 'foo.gts',
         contents: stripIndent`
@@ -462,7 +466,7 @@ describe('rewriteModule', () => {
         `,
       };
 
-      let rewritten = rewriteModule(ts, { script }, customEnv);
+      let rewritten = rewriteModule(ts, { script }, templateImportsEnv);
       let roundTripOffset = (offset: number): number | undefined =>
         rewritten?.getOriginalOffset(rewritten.getTransformedOffset(script.filename, offset))
           .offset;
@@ -509,7 +513,6 @@ describe('rewriteModule', () => {
     });
 
     test('implicit default export', () => {
-      let customEnv = GlintEnvironment.load(['ember-loose', 'ember-template-imports']);
       let script = {
         filename: 'foo.gts',
         contents: stripIndent`
@@ -519,7 +522,8 @@ describe('rewriteModule', () => {
         `,
       };
 
-      expect(rewriteModule(ts, { script }, customEnv)?.toDebugString()).toMatchInlineSnapshot(`
+      expect(rewriteModule(ts, { script }, templateImportsEnv)?.toDebugString())
+        .toMatchInlineSnapshot(`
         "TransformedModule
 
         | Mapping: Template
@@ -545,7 +549,6 @@ describe('rewriteModule', () => {
     });
 
     test('mixed expression and class uses', () => {
-      let customEnv = GlintEnvironment.load(['ember-loose', 'ember-template-imports']);
       let script = {
         filename: 'foo.gts',
         contents: stripIndent`
@@ -557,7 +560,7 @@ describe('rewriteModule', () => {
         `,
       };
 
-      let rewritten = rewriteModule(ts, { script }, customEnv);
+      let rewritten = rewriteModule(ts, { script }, templateImportsEnv);
       let roundTripOffset = (offset: number): number | undefined =>
         rewritten?.getOriginalOffset(rewritten.getTransformedOffset(script.filename, offset))
           .offset;

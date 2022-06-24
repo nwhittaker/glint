@@ -226,7 +226,8 @@ describe('Environments', () => {
           '() => ({ tags: { "foo-bar": { tpl: {} }, "baz": { hbs: {} } }, template: { typesPath: "foo" } })'
         );
 
-        let env = GlintEnvironment.load([envA, envB], { rootDir: testDir });
+        let envConfig = { [envA]: {}, [envB]: {} };
+        let env = GlintEnvironment.load(envConfig, { rootDir: testDir });
 
         expect(env.getTypesForStandaloneTemplate()).toEqual('foo');
         expect(env.getConfiguredTemplateTags()).toEqual({
@@ -238,8 +239,9 @@ describe('Environments', () => {
       test('loading conflicting standalone template config', () => {
         let envA = createEnvironment('() => ({ template: { typesPath: "foo" } })');
         let envB = createEnvironment('() => ({ template: { typesPath: "bar" } })');
+        let envConfig = { [envA]: {}, [envB]: {} };
 
-        expect(() => GlintEnvironment.load([envA, envB], { rootDir: testDir })).toThrow(
+        expect(() => GlintEnvironment.load(envConfig, { rootDir: testDir })).toThrow(
           'Multiple configured Glint environments attempted to define behavior for standalone template files'
         );
       });
@@ -247,8 +249,9 @@ describe('Environments', () => {
       test('loading conflicting tags config', () => {
         let envA = createEnvironment('() => ({ tags: { foo: { hbs: {} } } })');
         let envB = createEnvironment('() => ({ tags: { foo: { hbs: {} } } })');
+        let envConfig = { [envA]: {}, [envB]: {} };
 
-        expect(() => GlintEnvironment.load([envA, envB], { rootDir: testDir })).toThrow(
+        expect(() => GlintEnvironment.load(envConfig, { rootDir: testDir })).toThrow(
           "Multiple configured Glint environments attempted to define behavior for the tag `hbs` in module 'foo'"
         );
       });
@@ -265,7 +268,8 @@ describe('Environments', () => {
       test('string array', () => {
         let aName = createEnvironment('cfg => ({ tags: { foo: { hbs: cfg } } })');
         let bName = createEnvironment('cfg => ({ tags: { bar: { hbs: cfg } } })');
-        let env = GlintEnvironment.load([aName, bName], { rootDir: testDir });
+        let envConfig = { [aName]: {}, [bName]: {} };
+        let env = GlintEnvironment.load(envConfig, { rootDir: testDir });
 
         expect(env.getConfiguredTemplateTags()).toEqual({ foo: { hbs: {} }, bar: { hbs: {} } });
       });

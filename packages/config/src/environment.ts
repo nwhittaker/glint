@@ -100,7 +100,7 @@ export class GlintEnvironment {
   }
 
   public static load(
-    specifier: string | Array<string> | Record<string, unknown>,
+    specifier: string | Record<string, unknown>,
     { rootDir = '.' } = {}
   ): GlintEnvironment {
     let envs = normalizeEnvironmentSpecifier(specifier);
@@ -211,12 +211,10 @@ export class GlintEnvironment {
 }
 
 function normalizeEnvironmentSpecifier(
-  specifier: string | string[] | Record<string, unknown>
+  specifier: string | Record<string, unknown>
 ): Record<string, unknown> {
   if (typeof specifier === 'string') {
     return { [specifier]: null };
-  } else if (Array.isArray(specifier)) {
-    return specifier.reduce((obj, name) => ({ ...obj, [name]: null }), {});
   }
 
   return specifier;

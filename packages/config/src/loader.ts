@@ -95,12 +95,11 @@ function validateConfigInput(input: Record<string, unknown>): GlintConfigInput |
   if (!input['environment']) return null;
 
   assert(
-    Array.isArray(input['environment'])
-      ? input['environment'].every((env) => typeof env === 'string')
-      : typeof input['environment'] === 'string' ||
-          (typeof input['environment'] === 'object' && input['environment']),
-    'Glint config must specify an `environment` that is a string, array of strings, or an object ' +
-      'mapping environment names to their config.'
+    isObject(input['environment'])
+      ? !Array.isArray(input['environment'])
+      : typeof input['environment'] === 'string',
+    'Glint config must specify an `environment` that is a either string or an object ' +
+      'mapping environment names to their configuration.'
   );
 
   assert(
