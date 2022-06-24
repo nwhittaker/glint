@@ -1,5 +1,109 @@
 # Migrating
 
+## Glint 0.8.x to 0.9.x
+
+Glint 0.9 removes support for the `.glintrc.yml` file, moving configuration into your project's `tsconfig.json` or
+`jsconfig.json` file under a `"glint"` key instead. It also restructures the format of the configuration slightly.
+
+The changes are noted below, but also check out the [Configuration](configuration.md) guide for full details on
+the options you can specify.
+
+### Migrating `environment`
+
+If your `environment` value was a single string or a name/config object literal, you can translate it directly from
+YAML to JSON.
+
+{% tabs %}
+{% tab title=".glintrc.yml" %}
+
+```yaml
+environment: ember-loose
+```
+
+{% endtab %}
+{% tab title="tsconfig.json" %}
+
+```javascript
+{
+  "compilerOptions": { /* ... */ },
+  "glint": {
+    "environment": "ember-loose"
+  }
+}
+```
+
+{% endtab %}
+{% endtabs %}
+
+If you previously had an array of strings (as was suggested in `@glint/environment-ember-template-imports`'s README),
+you must now write the full expanded form, even if you aren't passing any special configuration to your environments.
+
+{% tabs %}
+{% tab title=".glintrc.yml" %}
+
+```yaml
+environment:
+  - ember-loose
+  - ember-template-imports
+```
+
+{% endtab %}
+{% tab title="tsconfig.json" %}
+
+```javascript
+{
+  "compilerOptions": { /* ... */ },
+  "glint": {
+    "environment": {
+      "ember-loose": {},
+      "ember-template-imports": {}
+    }
+  }
+}
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Migrating `include` and `exclude`
+
+The `include` and `exclude` options still function as before, but they are now grouped together under a `transform` key
+in order to more clearly denote their distinction from TypeScript's own `include`/`exclude`/`files` options.
+
+{% tabs %}
+{% tab title=".glintrc.yml" %}
+
+```yaml
+environment: ember-loose
+include:
+  - 'app/**'
+  - 'tests/**'
+```
+
+{% endtab %}
+{% tab title="tsconfig.json" %}
+
+```javascript
+{
+  "compilerOptions": { /* ... */ },
+  "glint": {
+    "environment": "ember-loose",
+    "transform": {
+      "include": ["app/**", "tests/**"]
+    }
+  }
+}
+```
+
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+If you have an `include` array like the one above that effectively encompasses your whole project, you should instead
+just drop that configuration and leave the `transform` key out of your configuration entirely. Glint performs template
+analysis on all files included by your `tsconfig` or `jsconfig` file by default.
+{% endhint %}
+
 ## Glint 0.7.x to 0.8.0
 
 Glint 0.8.0 drops support for custom imports from `@glint/environment-ember-loose` for values from `@ember/component`,
