@@ -14236,10 +14236,10 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-"true-myth@^5.4.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/true-myth/-/true-myth-5.4.0.tgz#eff4a4d09e47d616c8089d42c1e78ac9640c68a2"
-  integrity sha512-MonJqkJf+VOXZ2msbpvAI1uJWoyfCN7nirR8/fNK+IlFDWYNLb9iqeAc2uhIbAQBynHtM02azZgepQDQclOwAw==
+"true-myth@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/true-myth/-/true-myth-6.0.0.tgz#3ebaaf3a0a056fd4f3018e7d99370f8ef990d606"
+  integrity sha512-CGo9RsfNFHqG+jTxikeOMOQwbooAQpPkCg7Ds63Uxxm4KBch94YetvVC9Nv68AVwOqr7/aeOjOdgygWIHn0TAQ==
 
 ts-jest@^26.3.0:
   version "26.3.0"

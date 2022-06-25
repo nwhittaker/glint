@@ -5,6 +5,7 @@
   "repository": "typed-ember/glint",
   "description": "Scripts for working with Glint",
   "license": "MIT",
+  "type": "module",
   "authors": [
     "Dan Freeman (https://github.com/dfreeman)",
     "Chris Krycho (https://github.com/chriskrycho)"
@@ -30,7 +31,7 @@
     "golden-fleece": "^1.0.9",
     "js-yaml": "^4.1.0",
     "yargs": "^17.5.1",
-    "true-myth": "^5.4.0",
+    "true-myth": "^6.0.0",
     "zod": "^3.17.3"
   },
   "devDependencies": {
